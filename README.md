@@ -63,9 +63,7 @@ The objective is to place **each box onto a target**.
 
 The heuristic used by the A* algorithm consists of two components:
 
-\[
-h(n)=h_1(n)+h_2(n)
-\]
+h(n)=h₁(n)+h₂(n)
 
 where:
 
@@ -74,10 +72,8 @@ where:
 
 The final heuristic value is therefore:
 
-\[
-h(n)=\sum_{i=1}^{k}\min_{g \in Goals} Manhattan(box_i,g)
-+ IDS(player,nearest\ box)
-\]
+h(n) = Σ min(ManhattanDistance(Boxᵢ, Goalⱼ))
+       + IDS(Player, NearestBox)
 
 This heuristic combines box-to-goal proximity with player accessibility, providing a more informed estimate of the remaining effort required to solve the puzzle.
 
