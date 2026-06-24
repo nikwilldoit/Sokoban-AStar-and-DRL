@@ -59,6 +59,30 @@ The objective is to place **each box onto a target**.
   
 ---
 
+## Heuristic Function
+
+The heuristic used by the A* algorithm consists of two components:
+
+\[
+h(n)=h_1(n)+h_2(n)
+\]
+
+where:
+
+- **h₁(n)**: Sum of the minimum Manhattan distances between each box and its nearest goal.
+- **h₂(n)**: Distance from the player to the nearest box, estimated using Iterative Deepening Search (IDS).
+
+The final heuristic value is therefore:
+
+\[
+h(n)=\sum_{i=1}^{k}\min_{g \in Goals} Manhattan(box_i,g)
++ IDS(player,nearest\ box)
+\]
+
+This heuristic combines box-to-goal proximity with player accessibility, providing a more informed estimate of the remaining effort required to solve the puzzle.
+
+---
+
 ## Highlights
 
 - A* search with heuristic state evaluation
@@ -72,9 +96,32 @@ The objective is to place **each box onto a target**.
 
 ## Why IDS Instead of BFS or DFS?
 
-The heuristic requires estimating the shortest distance between the player and the nearest box. Iterative Deepening Search (IDS) combines the completeness of Breadth-First Search (BFS) with the low memory requirements of Depth-First Search (DFS), making it particularly suitable for repeated heuristic evaluations.
+The `IDSPlayertobox(...)` method computes the distance between the player and the nearest reachable box using **Iterative Deepening Search (IDS)**.
 
-Unlike BFS, IDS does not require storing an entire frontier in memory, while unlike DFS, it guarantees finding the shallowest reachable target. This provides a good balance between memory efficiency and solution quality during A* search.
+IDS was selected instead of Breadth-First Search (BFS) because BFS must store all nodes of the current frontier in memory. For a branching factor **b** and solution depth **d**, BFS requires:
+
+- **Time Complexity:** O(bᵈ)
+- **Space Complexity:** O(bᵈ)
+
+In Sokoban, the search space can become extremely large, making BFS memory-intensive.
+
+Depth-First Search (DFS), on the other hand, requires significantly less memory:
+
+- **Time Complexity:** O(bᵈ)
+- **Space Complexity:** O(bd)
+
+However, DFS is neither optimal nor guaranteed to find the shortest path, which is important for an accurate heuristic estimate.
+
+IDS combines the advantages of both approaches:
+
+- **Time Complexity:** O(bᵈ)
+- **Space Complexity:** O(bd)
+
+IDS repeatedly performs depth-limited searches with limits 0,1,2,... until a box is reached. Because shallower levels are explored first, IDS guarantees that the first solution found corresponds to the shortest player-to-box distance, similarly to BFS, while requiring memory proportional only to the search depth.
+
+Although IDS revisits nodes across successive iterations, its overall asymptotic running time remains O(bᵈ), comparable to BFS. In practice, the additional overhead is limited because many branches are quickly discarded due to walls, invalid moves, and deadlock conditions.
+
+As a result, IDS provides an optimal distance estimate while maintaining low memory consumption, making it particularly suitable for Sokoban environments where the state space can grow rapidly.
 
 ---
 
