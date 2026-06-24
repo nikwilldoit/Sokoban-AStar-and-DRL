@@ -36,12 +36,27 @@ The objective is to place **each box onto a target**.
 
 ## File Structure
 
-- **Main.java**  
+- **AstarAlgorithm.java**  
   Contains the entire codebase **except** the `Node` class.
+
+- **BoardUtils.java**  
+  Implements the `Node` class, which represents **a single game state** in the search space.
+
+- **DeadlockDetector.java**  
+  Implements the `Node` class, which represents **a single game state** in the search space.
+  
+- **GameLevels.java**  
+  Contains the levels of the game.
+
+- **HeuristicEvaluator.java**  
+  Implements the `Node` class, which represents **a single game state** in the search space.
+  
+- **Main.java**  
+  Implements the `Node` class, which represents **a single game state** in the search space.
 
 - **Node.java**  
   Implements the `Node` class, which represents **a single game state** in the search space.
-
+  
 ---
 
 ## Highlights
@@ -51,8 +66,7 @@ The objective is to place **each box onto a target**.
 - Deadlock detection for pruning invalid states
 - Step-by-step solution visualization
 
-
-
+## Why IDS algorithm instead of BFS and DFS in the heuristic calculation
 
 
 ### Example: Sokoban Hard Level Solution (A*)
