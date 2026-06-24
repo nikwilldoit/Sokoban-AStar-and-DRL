@@ -36,38 +36,47 @@ The objective is to place **each box onto a target**.
 
 ## File Structure
 
-- **AstarAlgorithm.java**  
-  Contains the entire codebase **except** the `Node` class.
+- **Main.java**  
+  Entry point of the application. Handles level selection, initialization, and execution of the A* solver.
+
+- **AStarSolver.java**  
+  Implements the core A* search algorithm and reconstructs the final solution path.
 
 - **BoardUtils.java**  
-  Implements the `Node` class, which represents **a single game state** in the search space.
+  Provides utility methods for board manipulation, including move validation, board updates, player localization, state copying, and board preprocessing.
 
 - **DeadlockDetector.java**  
-  Implements the `Node` class, which represents **a single game state** in the search space.
-  
+  Implements deadlock detection techniques (corner and corridor deadlocks) used to cut down unsolvable states and significantly reduce the search space.
+
 - **GameLevels.java**  
-  Contains the levels of the game.
+  Stores the predefined Sokoban levels used for testing and evaluation.
 
 - **HeuristicEvaluator.java**  
-  Implements the `Node` class, which represents **a single game state** in the search space.
-  
-- **Main.java**  
-  Implements the `Node` class, which represents **a single game state** in the search space.
+  Implements the heuristic function used by A*. Combines Manhattan distance between boxes and goals with an IDS-based estimation of the player's distance to the nearest box.
 
 - **Node.java**  
-  Implements the `Node` class, which represents **a single game state** in the search space.
+  Represents a single search state, including the board configuration, player position, path cost (`g`), heuristic value (`h`), evaluation function (`f`), and parent reference for solution reconstruction.
   
 ---
 
 ## Highlights
 
-- A\* search with heuristic evaluation
-- Used IDS algorithm for heuristic implementation
-- Deadlock detection for pruning invalid states
+- A* search with heuristic state evaluation
+- IDS-enhanced heuristic calculation
+- Deadlock detection for pruning unsolvable states
+- Corner and corridor deadlock recognition
+- Automatic solution path reconstruction
 - Step-by-step solution visualization
 
-## Why IDS algorithm instead of BFS and DFS in the heuristic calculation
+---
 
+## Why IDS Instead of BFS or DFS?
+
+The heuristic requires estimating the shortest distance between the player and the nearest box. Iterative Deepening Search (IDS) combines the completeness of Breadth-First Search (BFS) with the low memory requirements of Depth-First Search (DFS), making it particularly suitable for repeated heuristic evaluations.
+
+Unlike BFS, IDS does not require storing an entire frontier in memory, while unlike DFS, it guarantees finding the shallowest reachable target. This provides a good balance between memory efficiency and solution quality during A* search.
+
+---
 
 ### Example: Sokoban Hard Level Solution (A*)
 
