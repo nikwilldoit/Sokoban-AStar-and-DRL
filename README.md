@@ -4,10 +4,10 @@ An AI-based solver for the classic **Sokoban** puzzle, implemented using the **A
 
 ---
 
-> The UI is being built with Swing Library in JAVA.
+> The UI is being built with Swing Library in JAVA.     
 > A Deep Reinforcement Learning Algorithm is also being built.
 
---
+---
 
 ## Game Rules
 
