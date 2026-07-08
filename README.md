@@ -21,18 +21,5 @@ The objective is to place **each box onto a target**.
 
 ---
 
-## Symbol Mappings
-
-| Symbol | Meaning              |
-|------:|----------------------|
-| `1`   | Player               |
-| `0`   | Box                  |
-| `#`   | Wall                 |
-| `$`   | Target               |
-| `*`   | Box on Target        |
-| `+`   | Player on Target     |
-
----
-
 For the **A\*** implementation click [here](https://github.com/Michail-Marakis/Sokoban-solver-using-A-star/tree/main/Astar)     
 For the **DRL** implementation click [here](https://github.com/Michail-Marakis/Sokoban-solver-using-A-star/tree/main/Deep%20Reinforcement%20Learning)
