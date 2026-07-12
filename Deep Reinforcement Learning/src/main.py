@@ -1,11 +1,10 @@
-import gymnasium as gym
 
 from environment.sokoban_env import SokobanEnv
 
 
 if __name__ == "__main__":
 
-    env = SokobanEnv(level=0)
+    env = SokobanEnv(level_id=0)
 
     observation, info = env.reset()
 
