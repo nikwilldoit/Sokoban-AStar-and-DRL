@@ -43,6 +43,11 @@ class Board:
     @staticmethod
     def move_player(newRow, newCol, grid, direction):
 
+        moved = False
+        pushed_box = False
+        box_on_target = False
+        box_left_target = False
+
         oldRow = newRow - DIRECTIONS[direction][0]
         oldCol = newCol - DIRECTIONS[direction][1]
 
@@ -63,6 +68,8 @@ class Board:
 
         if targetTile == Tile.EMPTY or targetTile == Tile.TARGET:
             
+            moved = True
+
             if targetTile == Tile.TARGET:
                 grid[newRow][newCol] = Tile.PLAYER_ON_TARGET
             else:
@@ -82,29 +89,32 @@ class Board:
 
             #check if space exist for the box to be moved
             if afterBoxTile == Tile.EMPTY or afterBoxTile == Tile.TARGET:
-
+                moved = True
+                pushed_box = True
                 
                 #moved the box
                 if afterBoxTile == Tile.TARGET:
                     grid[boxNewRow][boxNewCol] = Tile.BOX_ON_TARGET
+                    box_on_target = True
                 else:
                     grid[boxNewRow][boxNewCol] = Tile.BOX
                 
 
                 #player moves in the position of the box
                 if targetTile == Tile.BOX_ON_TARGET:
+                    box_left_target = True
                     grid[newRow][newCol] = Tile.PLAYER_ON_TARGET
                 else:
                     grid[newRow][newCol] = Tile.PLAYER
 
-                return grid
+                return grid, moved, pushed_box, box_on_target, box_left_target
             
         if oldTile == Tile.PLAYER_ON_TARGET:
             grid[oldRow][oldCol] = Tile.PLAYER_ON_TARGET
         else:
             grid[oldRow][oldCol] = Tile.PLAYER
 
-        return grid
+        return grid, moved, pushed_box, box_on_target, box_left_target
 
 
                 

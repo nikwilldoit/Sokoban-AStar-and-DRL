@@ -11,6 +11,7 @@ NUM_CHANNELS = 6
 POOL_SIZE = 6
 
 
+
 #Training
 
 TOTAL_EPISODES = 10000
@@ -29,6 +30,7 @@ SEED = 42
 
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
+
 #PPO Hyperparameters
 
 LEARNING_RATE = 3e-4
@@ -44,3 +46,31 @@ VALUE_LOSS_COEF = 0.5
 ENTROPY_COEF = 0.01
 
 MAX_GRAD_NORM = 0.5
+
+#Rewards
+
+MOVE = -0.05
+
+INVALID_MOVE = -2.0
+
+#Boxes
+
+BOX_ON_TARGET = 15.0
+
+BOX_OFF_TARGET = -15.0
+
+BOX_PUSH = 0.5
+
+#Episode ending
+
+LEVEL_COMPLETED = 100.0
+
+DEADLOCK = -80.0
+
+STEP_LIMIT = -30.0
+
+#Optional shaping rewards
+
+NEW_BEST_PROGRESS = 2.0
+
+UNDO_PROGRESS = -2.0
