@@ -7,6 +7,7 @@ from environment.observations import ObservationEncoder
 import utils.config as config
 from environment.actions import DIRECTIONS
 from environment.deadlock import DeadlockDetector
+from environment.renderer import Renderer
 
 class SokobanEnv(gym.Env):
 
@@ -14,7 +15,7 @@ class SokobanEnv(gym.Env):
         super().__init__()
 
         self.level_id = level_id
-
+        self.renderer = Renderer()
         self.initialized_board = Board.pad_board(GameLevels.LEVELS[level_id])
         self.board = Board.copy_grid(self.initialized_board)
 
@@ -53,7 +54,7 @@ class SokobanEnv(gym.Env):
 
         self.steps += 1
 
-        moved, pushed_box, box_on_target, invalid_move = self._apply_action(action)
+        moved, pushed_box, box_on_target, invalid_move, box_left_target  = self._apply_action(action)
 
         deadlock = False
         completed = False
@@ -79,7 +80,8 @@ class SokobanEnv(gym.Env):
             box_on_target=box_on_target,
             invalid_move=invalid_move,
             deadlock=deadlock,
-            completed=completed
+            completed=completed,
+            box_left_target = box_left_target
         )
 
         #Extra penalty if episode stopped because of step limit
@@ -140,7 +142,7 @@ class SokobanEnv(gym.Env):
 
         if box_left_target:
             reward += config.BOX_OFF_TARGET
-            
+
         return reward
 
     def _apply_action(self, action):
@@ -149,7 +151,7 @@ class SokobanEnv(gym.Env):
         new_col = self.player_col + DIRECTIONS[action][1]
 
         if not Board.is_valid_move(new_row, new_col, self.board, action):
-            return False, False, False, True
+            return False, False, False, True, False
 
         self.board, moved, pushed_box, box_on_target, box_left_target = Board.move_player(
             new_row,
@@ -163,3 +165,11 @@ class SokobanEnv(gym.Env):
             self.player_col = new_col
 
         return moved, pushed_box, box_on_target, False, box_left_target
+    
+
+    def _get_info(self):
+
+        return {
+            "level": self.level_id,
+            "steps": self.steps
+        }
