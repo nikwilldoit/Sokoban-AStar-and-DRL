@@ -1,30 +1,74 @@
-import matplotlib
+import csv
+import os
+
 
 class Logger:
 
-    def __init__(self):
-        pass
+    def __init__(self, log_dir="logs"):
 
-    def log_episode():
-        pass
+        self.log_dir = log_dir
+        os.makedirs(log_dir, exist_ok=True)
 
-    def log_update():
-        pass
+        self.csv_file = os.path.join(log_dir, "training_log.csv")
 
-    def log_evaluation():
-        pass
+        #Create csv file
+        if not os.path.exists(self.csv_file):
 
-    def save_csv():
-        pass
+            with open(self.csv_file, "w", newline="") as file:
 
-    def save_model_info():
-        pass
+                writer = csv.writer(file)
 
-    def plot_training():
-        pass
+                writer.writerow([
+                    "Episode",
+                    "Reward",
+                    "Steps",
+                    "Completed",
+                    "Deadlock"
+                ])
 
-    def plot_losses():
-        pass
 
-    def plot_success_rate():
-        pass
+    def log_episode(
+        self,
+        episode,
+        reward,
+        steps,
+        completed,
+        deadlock
+    ):
+
+        print(
+            f"Episode {episode:5d} | "
+            f"Reward: {reward:8.2f} | "
+            f"Steps: {steps:4d} | "
+            f"Completed: {completed} | "
+            f"Deadlock: {deadlock}"
+        )
+
+        with open(self.csv_file, "a", newline="") as file:
+
+            writer = csv.writer(file)
+
+            writer.writerow([
+                episode,
+                reward,
+                steps,
+                completed,
+                deadlock
+            ])
+
+
+    def log_model(self, path):
+
+        print(f"Model saved to {path}")
+
+
+    def log_evaluation(
+        self,
+        reward,
+        completed
+    ):
+
+        print("\n========== Evaluation ==========")
+        print(f"Reward: {reward:.2f}")
+        print(f"Completed: {completed}")
+        print("================================\n")

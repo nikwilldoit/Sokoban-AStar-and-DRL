@@ -125,7 +125,6 @@ class SokobanEnv(gym.Env):
         if invalid_move:
             reward += config.INVALID_MOVE
             return reward
-        
         if moved:
             reward += config.MOVE
 
