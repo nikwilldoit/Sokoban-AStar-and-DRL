@@ -90,6 +90,7 @@ As a result, IDS provides an optimal distance estimate while maintaining low mem
 ### Example: Sokoban Hard Level Solution (A*)
 
 The following images illustrate the execution of the **A\*** search algorithm on a **hard Sokoban level**.
+The UI is going to be implemented using Swwing Framework.
 
 - **Step 0** shows the initial state of the puzzle.
   - The heuristic value is `h = 10`
