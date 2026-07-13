@@ -31,7 +31,7 @@ class ActorCritic(nn.Module):
 
         features = self.cnn(state)
 
-        logits = self.policy(features)
-        value = self.value(features)
+        logits = self.actor(features)
+        value = self.critic(features)
 
         return logits,value

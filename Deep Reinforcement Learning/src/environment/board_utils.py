@@ -1,5 +1,5 @@
 from environment.actions import DIRECTIONS
-from tiles import Tile
+from environment.tiles import Tile
 class Board:
 
     @staticmethod
@@ -75,14 +75,14 @@ class Board:
             else:
                 grid[newRow][newCol] = Tile.PLAYER
             
-            return grid
+            return grid, moved, pushed_box, box_on_target, box_left_target
 
         if targetTile == Tile.BOX or targetTile == Tile.BOX_ON_TARGET:
             boxNewRow = newRow + DIRECTIONS[direction][0]
             boxNewCol = newCol + DIRECTIONS[direction][1]
 
             if boxNewRow < 0 or boxNewRow >= len(grid) or boxNewCol < 0 or boxNewCol >= len(grid[0]):
-                return grid
+                return grid, moved, pushed_box, box_on_target, box_left_target
         
             afterBoxTile = grid[boxNewRow][boxNewCol]
 

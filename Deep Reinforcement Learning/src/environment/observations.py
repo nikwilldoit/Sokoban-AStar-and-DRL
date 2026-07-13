@@ -1,6 +1,6 @@
 import numpy as np
 from gymnasium import spaces
-from tiles import Tile
+from environment.tiles import Tile
 
 class ObservationEncoder:
 

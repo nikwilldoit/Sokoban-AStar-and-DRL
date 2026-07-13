@@ -16,7 +16,7 @@ class SokobanEnv(gym.Env):
 
         self.level_id = level_id
         self.renderer = Renderer()
-        self.initialized_board = Board.pad_board(GameLevels.LEVELS[level_id])
+        self.initialized_board = Board.pad_board(GameLevels.levels(level_id))
         self.board = Board.copy_grid(self.initialized_board)
 
         self.player_row, self.player_col = Board.find_player(self.board)
@@ -91,7 +91,7 @@ class SokobanEnv(gym.Env):
         self.total_reward += reward
 
         observation = self._get_observation()
-        info = self._get_info()
+        info = self._get_info(completed=completed, deadlock=deadlock, invalid_move=invalid_move)
 
         return observation, reward, terminated, truncated, info
 
@@ -167,9 +167,18 @@ class SokobanEnv(gym.Env):
         return moved, pushed_box, box_on_target, False, box_left_target
     
 
-    def _get_info(self):
+    def _get_info(
+        self,
+        completed=False,
+        deadlock=False,
+        invalid_move=False
+        ):
 
         return {
             "level": self.level_id,
-            "steps": self.steps
+            "steps": self.steps,
+            "completed": completed,
+            "deadlock": deadlock,
+            "invalid_move": invalid_move,
+            "total_reward": self.total_reward
         }

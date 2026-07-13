@@ -1,4 +1,4 @@
-from tiles import Tile
+from environment.tiles import Tile
 
 class DeadlockDetector:
 
