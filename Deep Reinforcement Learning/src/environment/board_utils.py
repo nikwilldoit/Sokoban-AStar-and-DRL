@@ -26,6 +26,8 @@ class Board:
             next_row = row + DIRECTIONS[direction][0]
             next_col = col + DIRECTIONS[direction][1]
 
+
+
             #Check board boundaries
             if next_row < 0 or next_row >= len(board):
                 return False
