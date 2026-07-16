@@ -18,8 +18,6 @@ class Board:
         if target_cell == Tile.WALL:
             return False
 
-
-
         #Box or box on target
         if target_cell == Tile.BOX or target_cell == Tile.BOX_ON_TARGET:
 
