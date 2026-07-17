@@ -1,5 +1,7 @@
 from environment.actions import DIRECTIONS
 from environment.tiles import Tile
+import utils.config as config
+
 class Board:
 
     @staticmethod
@@ -142,23 +144,31 @@ class Board:
     @staticmethod
     def pad_board(grid):
 
-        rows = len(grid)
-        cols = 0
+        new_board = []
 
-        #Find the longest row
-        for row in grid:
-            cols = max(cols, len(row))
+    
+        for i in range(config.BOARD_HEIGHT):
 
-        #Create a new board filled with walls
-        new_board = [[Tile.WALL for _ in range(cols + 2)] for _ in range(rows + 2)]
+            row = []
 
-        #Copy the original board
-        for i in range(rows):
+            for j in range(config.BOARD_WIDTH):
+                row.append(Tile.WALL)
+
+            new_board.append(row)
+
+    
+        for i in range(len(grid)):
+
             for j in range(len(grid[i])):
-                new_board[i + 1][j + 1] = grid[i][j]
+
+                if (
+                    i + 1 < config.BOARD_HEIGHT and
+                    j + 1 < config.BOARD_WIDTH
+                ):
+
+                    new_board[i + 1][j + 1] = grid[i][j]
 
         return new_board
-
 
     @staticmethod
     def is_completed(board):

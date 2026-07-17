@@ -188,10 +188,10 @@ class Trainer:
         else:
 
             difficulties = [
-                "easy",
-                "medium",
-                "hard",
-                "expert"
+                "easy"
             ]
 
+            #"medium",
+             #   "hard",
+              #  "expert"
         return GameLevels.random_level(difficulties)
